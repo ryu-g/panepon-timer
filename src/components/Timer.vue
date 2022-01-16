@@ -6,6 +6,7 @@
       <tr>
         <th>stage</th>
         <th>rap time</th>
+        <th>play time(approximate)</th>
         <th>total time</th>
       </tr>
       <tr v-for="time,index in times"
@@ -16,6 +17,9 @@
         </td>
         <td>
           {{toDisplayTime(time.time)}}
+        </td>
+        <td>
+          {{toDisplayPlayTime(time.stageCount, time.time)}}
         </td>
         <td>
           {{toDisplayTime(time.checkpointTime)}}
@@ -241,6 +245,11 @@ export default {
       const sec = Math.floor(ms / 1000) % 60
       const msec = ms % 1000
       return this.zeroPad(min,2) + ':' + this.zeroPad(sec,2) + '.' + this.zeroPadEnd(Math.floor(msec / 10), 2)
+    },
+    toDisplayPlayTime: function(count, ms) {
+      if (count === 1) return this.toDisplayTime(ms)
+      else if (count <= 8) return this.toDisplayTime(ms - 17000)
+      else return this.toDisplayTime(ms - 20000)
     },
 
     // utils
